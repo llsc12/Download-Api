@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "systeminformation": "^5.6.7"
+  },
+  "name": "download-api",
+  "version": "1.0.0",
+  "description": "a crappy app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "llsc12",
+  "license": "MIT"
+}
