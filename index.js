@@ -14,6 +14,8 @@ ________________________________________________________________________________
 const Discord = require('discord.js'), si = require("systeminformation"), nodeOS = require("os"), config = require("./config.json"), fs = require("fs");
 const client = new Discord.Client()
 
+//https://stackoverflow.com/questions/26189174/express-js-how-to-download-stream-as-a-file
+
 
 if (config.bot_token) {
 client.login(config.bot_token);
