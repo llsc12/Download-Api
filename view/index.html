@@ -1,32 +1,48 @@
 <html>
   <link rel="stylesheet" href="watch/style.css">
-  <script src='watch/script.js'></script>
+  <head>
+    <title>Download API</title>
+  </head>
+  <body>
+    <h1 class="heading">Download API Viewer</h1>
+    <input id="txt" class="URL-input" placeholder="Video URL">
+    <video class="video" width="640" height="360" id="video" controls>
+      <source id="source" src="" type="video/mp4">
+    </video>
 
-<head>
-  <title>Download API</title>
-</head>
-<body>
-  <h1 class="heading">Download API Viewer</h1>
-  <input id="txt" class="URL-input" placeholder="Video URL">
-  <video class="video" width="640" height="360" id="video" controls>
-    <source id="source" src="" type="video/mp4">
-  </video>
-
-</body>
-<script>
-  let urlStart = `api/v1/download?url=`
-  var video = document.getElementById('video');
-  var source = document.getElementById('source');
-  let vidurl = document.getElementById('source').getAttribute('src')
-  setInterval(() => {
-    let txtbox = document.getElementById('txt').value
-    if (vidurl != txtbox) {
-      if (!txtbox.includes('youtu')) return
-      vidurl = txtbox
-      source.setAttribute('src', urlStart+document.getElementById('txt').value);
-      video.load();
-      video.play();
+  </body>
+  <script>
+    function urlParse (url) {
+      // thanks to Intelli :)
+      let query = url.split('?')[1]
+      let params = query.split('&')
+      let array = new Array()
+      for (each of params) {
+        let split = each.split('=')
+        array[split[0]]=split[1]
+      }
+      return array
     }
-  }, 200)
-</script>
+    let query = urlParse(document.URL)
+    let urlStart = `api/v1/download?url=`
+    var video = document.getElementById('video');
+    var source = document.getElementById('source');
+    let vidurl = document.getElementById('source').getAttribute('src')
+
+    if (query["v"]) {
+      source.setAttribute('src', urlStart+'https://youtu.be/'+query["v"]);
+      vidurl = document.getElementById('source').getAttribute('src')
+      video.load();
+    }
+    setInterval(() => {
+      let txtbox = document.getElementById('txt').value
+      if (vidurl != txtbox) {
+        if (!txtbox.includes('youtu')) return
+        vidurl = txtbox
+        source.setAttribute('src', urlStart+document.getElementById('txt').value);
+        video.load();
+        video.play();
+      }
+    }, 200)
+  </script>
 </html>

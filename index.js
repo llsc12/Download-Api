@@ -26,7 +26,9 @@ for (const versionFolder of fs.readdirSync('./versions')) {
     let endpoints = new Array()
     for (const file of fs.readdirSync(`./versions/${versionFolder}/`)) {
       const loaded = require(`./versions/${versionFolder}/${file}`)
+      if (!loaded.endpoint || !loaded.execute) return
       endpoints.push(`/api/v${versionFolder}/${loaded.endpoint}`)
+      console.log('loaded '+loaded.endpoint)
       srv.all(`/api/v${versionFolder}/${loaded.endpoint}`, (...args) => loaded.execute(...args))
       delete require.cache[require.resolve(`./versions/${versionFolder}/${file}`)];
     }
@@ -46,13 +48,12 @@ srv.all(`/`, (req, res) => {
   res.send(`
   <p><a href="/api/v${latestVer}">Click to see latest endpoints</a></p>
   <p><a href="/watch">Click to use the GUI</a></p>
-  <!-- Discord embed stuff -->
+
   <title>Download API</title>
   <meta content="Download API" property="og:title">
   <meta content="YouTube API written in NodeJS" property="og:description">
   <meta content="https://avatars.githubusercontent.com/u/42747613" property="og:image">
   <meta content="#00FFF4" data-react-helmet="true" name="theme-color">
-  <!-- Discord embed stuff End -->
 
   `)
 })
@@ -67,9 +68,6 @@ srv.all('/api', (req, res) => {
 
 srv.all('/watch', (req, res) => {
   res.sendFile(path.join(__dirname, '/view/index.html'))
-})
-srv.all('/watch/script.js', (req, res) => {
-  res.sendFile(path.join(__dirname, '/view/script.js'))
 })
 srv.all('/watch/style.css', (req, res) => {
   res.sendFile(path.join(__dirname, '/view/style.css'))
