@@ -1,14 +1,15 @@
 const ytdl = require('ytdl-core')
 module.exports = {
   endpoint:"download",
-  execute(req, res) {
+  async execute(req, res) {
     let vidURL = req.query.url
     if (!vidURL) return res.send({error:'No URL provided. Add url as query.'})
-    if (!vidURL.includes('youtu')) return res.send({error:'Invalid URL provided. Add YouTube URL as query.'})
+    let details = await ytdl.getBasicInfo(vidURL).catch(e => {return res.send({error:'API Error: '+e})})
+    if (!details.page) {return res.send({error:'API Error: Page not available'})}
+    let vid = ytdl(vidURL, {filter: 'audioandvideo', quality: 'highestvideo'})
+    .on('error', (e) => {return res.send({error:'API Error: '+e})})
     res.set('Content-Type', 'application/octet-stream')
     res.set('Content-Disposition', 'attachment; filename="video.mp4"')
-    ytdl(vidURL, {filter: 'audioandvideo', quality: 'highestvideo'})
-    .on('error', (e) => {return res.send({error:'API Error: '+e})})
-    .pipe(res)
+    vid.pipe(res)
   }
 }

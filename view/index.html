@@ -41,13 +41,18 @@
     }
     setInterval(() => {
       let txtbox = document.getElementById('txt').value
-      if (vidurl != txtbox) {
-        if (!txtbox.includes('youtu')) return
+      if (vidurl !== txtbox) {
+        let regexCode = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*?[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/gi
+        if (!txtbox.match(regexCode)) return
+        if (!(txtbox.match(regexCode).length == 1)) return
+        if (!txtbox.match(regexCode)[0]) return
+        document.getElementById('txt').value = "https://"+(txtbox.match(regexCode)[0])
+        txtbox = document.getElementById('txt').value
         vidurl = txtbox
         source.setAttribute('src', urlStart+document.getElementById('txt').value);
         video.load();
         video.play();
       }
-    }, 200)
+    }, 1000)
   </script>
 </html>
