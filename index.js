@@ -48,6 +48,7 @@ srv.all(`/`, (req, res) => {
   res.send(`
   <p><a href="/api/v${latestVer}">Click to see latest endpoints</a></p>
   <p><a href="/watch">Click to use the GUI</a></p>
+  <p><a href="https://github.com/llsc12/download-api">Click to check out the GitHub Repo</a></p>
 
   <title>Download API</title>
   <meta content="Download API" property="og:title">
@@ -72,6 +73,10 @@ srv.all('/watch', (req, res) => {
 srv.all('/watch/style.css', (req, res) => {
   res.sendFile(path.join(__dirname, '/view/style.css'))
 })
-
-srv.listen(4000)
+srv.all('/favicon.png', (req, res) => {
+  res.sendFile(path.join(__dirname, '/favicon.png'))
+})
+let portnumber = 3000
+if (config.port) portnumber = config.port
+srv.listen(portnumber)
 

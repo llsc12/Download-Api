@@ -1,12 +1,13 @@
 <html>
   <link rel="stylesheet" href="watch/style.css">
   <head>
+    <link rel="icon" href="favicon.png">
     <title>Download API</title>
   </head>
   <body>
     <h1 class="heading">Download API Viewer</h1>
     <input id="txt" class="URL-input" placeholder="Video URL">
-    <video class="video" width="640" height="360" id="video" controls>
+    <video class="video" width="640" height="360" id="video" controls autoplay="false">
       <source id="source" src="" type="video/mp4">
     </video>
 
@@ -14,8 +15,9 @@
   <script>
     function urlParse (url) {
       // thanks to Intelli :)
-      let query = url.split('?')[1]
-      let params = query.split('&')
+      let urlquery = url.split('?')[1]
+      if (!urlquery) return []
+      let params = urlquery.split('&')
       let array = new Array()
       for (each of params) {
         let split = each.split('=')
@@ -32,6 +34,9 @@
     if (query["v"]) {
       source.setAttribute('src', urlStart+'https://youtu.be/'+query["v"]);
       vidurl = document.getElementById('source').getAttribute('src')
+      document.getElementById('video').setAttribute('autoplay', "true");
+      let txtbox = 'https://youtu.be/'+query["v"]
+      document.getElementById('txt').value = 'https://youtu.be/'+query["v"]
       video.load();
     }
     setInterval(() => {
