@@ -3,6 +3,10 @@
   <head>
     <link rel="icon" href="favicon.png">
     <title>Download API</title>
+    <meta id="title" content="Download API Viewer" property="og:title">
+    <meta id="description" content="View YouTube videos without the YouTube" property="og:description">
+    <meta content="https://llsc12.ml/favicon.png" property="og:image">
+    <meta content="#00FFF4" data-react-helmet="true" name="theme-color">
   </head>
   <body>
     <h1 class="heading">Download API Viewer</h1>
@@ -10,8 +14,8 @@
     <video class="video" width="640" height="360" id="video" controls autoplay="false">
       <source id="source" src="" type="video/mp4">
     </video>
-
   </body>
+
   <script>
     function urlParse (url) {
       // thanks to Intelli :)
@@ -32,10 +36,10 @@
     let vidurl = document.getElementById('source').getAttribute('src')
 
     if (query["v"]) {
+      //set player to query id
       source.setAttribute('src', urlStart+'https://youtu.be/'+query["v"]);
-      vidurl = document.getElementById('source').getAttribute('src')
+      vidurl = 'https://youtu.be/'+query["v"]
       document.getElementById('video').setAttribute('autoplay', "true");
-      let txtbox = 'https://youtu.be/'+query["v"]
       document.getElementById('txt').value = 'https://youtu.be/'+query["v"]
       video.load();
     }

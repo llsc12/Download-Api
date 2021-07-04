@@ -5,6 +5,7 @@
     "ffmpeg-static": "^4.4.0",
     "systeminformation": "^5.6.7",
     "ytdl": "^1.4.1",
+    "ytpl": "^2.2.1",
     "ytsr": "^3.5.0"
   },
   "name": "download-api",

@@ -76,6 +76,7 @@ srv.all('/watch/style.css', (req, res) => {
 srv.all('/favicon.png', (req, res) => {
   res.sendFile(path.join(__dirname, '/favicon.png'))
 })
+
 let portnumber = 3000
 if (config.port) portnumber = config.port
 srv.listen(portnumber)

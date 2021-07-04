@@ -1,6 +1,6 @@
 const ytdl = require('ytdl-core')
 module.exports = {
-  endpoint:"video",
+  endpoint:"audio",
   async execute(req, res) {
     let vidURL = req.query.url
     if (!vidURL) return res.send({error:'No URL provided. Add url as query.'})
