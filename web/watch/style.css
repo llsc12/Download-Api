@@ -1,20 +1,24 @@
 * {
   text-align: center;
 }
+body {
+  background: #141718;
+}
 .heading {
   font-family: Arial;
   margin-top:10vh;
+  color: white;
 }
 .URL-input, .convert-button {
   font-size:1.3em;
   padding:5px 10px;
 }
 .URL-input {
-  border-radius:4px 0px 0px 4px;
-  width:30em;
+  border-radius:4px 4px 4px 4px;
+  width:31em;
   text-align: left;
-  border:2px solid #EEEEEE;
-  background: #EEEEEE;
+  border:1px solid #3c4244;
+  background: #222527;
   outline:none;
 }
 .URL-input:focus {
@@ -27,5 +31,10 @@
   color:white;
 }
 .video {
-  padding:5px 10px;
+  padding:20px 10px;
+}
+.search {
+  font-family: Arial;
+  margin-top:3vh;
+  color: white;
 }

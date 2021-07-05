@@ -28,7 +28,7 @@ for (const versionFolder of fs.readdirSync('./versions')) {
       const loaded = require(`./versions/${versionFolder}/${file}`)
       if (!loaded.endpoint || !loaded.execute) return
       endpoints.push(`/api/v${versionFolder}/${loaded.endpoint}`)
-      console.log('loaded '+loaded.endpoint)
+      console.log('Loaded Endpoint '+loaded.endpoint)
       srv.all(`/api/v${versionFolder}/${loaded.endpoint}`, (...args) => loaded.execute(...args))
       delete require.cache[require.resolve(`./versions/${versionFolder}/${file}`)];
     }
@@ -67,15 +67,25 @@ srv.all('/api', (req, res) => {
   res.redirect(307, `/api/v${latestVer}`)
 })
 
-srv.all('/watch', (req, res) => {
-  res.sendFile(path.join(__dirname, '/view/index.html'))
-})
-srv.all('/watch/style.css', (req, res) => {
-  res.sendFile(path.join(__dirname, '/view/style.css'))
-})
-srv.all('/favicon.png', (req, res) => {
-  res.sendFile(path.join(__dirname, '/favicon.png'))
-})
+// Now that the api is done loading, make a new subdirectory of pages
+
+for (let page of fs.readdirSync('./web')) {
+  if (page == '.DS_Store') return fs.unlinkSync(`./web/${page}`)
+  let pageContents = fs.readdirSync('./web/'+page)
+  pageContents.forEach(file => {
+    if (file == 'index.html') {
+      srv.all(`/${page}`, (req, res) => {
+        res.sendFile(path.join(__dirname, `/web/${page}/${file}`))
+      })
+    } else {
+      srv.all(`/${page}/${file}`, (req, res) => {
+        res.sendFile(path.join(__dirname, `/web/${page}/${file}`))
+      })
+    }
+  })
+  console.log(`Loaded Webpage ${page}`)
+}
+
 
 let portnumber = 3000
 if (config.port) portnumber = config.port
