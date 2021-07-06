@@ -89,5 +89,6 @@ for (let page of fs.readdirSync('./web')) {
 
 let portnumber = 3000
 if (config.port) portnumber = config.port
+console.log('Running on local port '+portnumber)
 srv.listen(portnumber)
 
