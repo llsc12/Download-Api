@@ -77,6 +77,8 @@ for (let page of fs.readdirSync('./web')) {
       srv.all(`/${page}`, (req, res) => {
         res.sendFile(path.join(__dirname, `/web/${page}/${file}`))
       })
+    } else if (file == '.DS_Store') {
+      fs.unlinkSync(`./web/${page}/${file}`)
     } else {
       srv.all(`/${page}/${file}`, (req, res) => {
         res.sendFile(path.join(__dirname, `/web/${page}/${file}`))
