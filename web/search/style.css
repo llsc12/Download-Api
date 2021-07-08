@@ -1,0 +1,7 @@
+div.aligned {
+    display: flex;
+    align-items: center;
+}
+p.sidetext {
+    padding: 10px;
+}

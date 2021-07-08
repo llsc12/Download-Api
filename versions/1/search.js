@@ -5,7 +5,6 @@ module.exports = {
     if (req.query.search_query) {
       let limited = 50
       let filter1 = await ytsr.getFilters(req.query.search_query)
-      console.log(filter1)
       if (req.query.limit) limited = parseInt(req.query.limit)
       let result = await ytsr(req.query.search_query, {limit:limited})
       return res.send(result)
