@@ -24,14 +24,15 @@ body {
 .URL-input:focus {
   border:2px solid #0485ff;
 }
-.play-btn {
-  border-radius:0px 4px 4px 0px;
+.btn {
+  border-radius:4px 4px 4px 4px;
   border:9px solid #0485ff;
   background: #0485ff;
   color:white;
 }
 .video {
   padding:20px 10px;
+  align-self: center;
 }
 .search {
   font-family: Arial;
