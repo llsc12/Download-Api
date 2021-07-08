@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "discord.js": "^12.5.1",
+    "enmap": "^5.8.6",
     "express": "^4.17.1",
     "ffmpeg-static": "^4.4.0",
     "systeminformation": "^5.6.7",
@@ -11,7 +12,7 @@
   "name": "download-api",
   "version": "1.0.0",
   "description": "a crappy app",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
