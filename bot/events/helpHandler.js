@@ -1,8 +1,7 @@
-const discord = require('discord.js'), fs = require('fs'), enmap = require('enmap')
+const discord = require('discord.js'), fs = require('fs')
 module.exports = {
   name:"messageReactionAdd",
   execute(client, reaction, user) {
-    const data = new enmap({ name: "botdata", dataDir:"./bot/data"});
     function deniedEmbed(err) {
       const deniedEmbed = new discord.MessageEmbed()
       .setTitle('Error')

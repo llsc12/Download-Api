@@ -1,9 +1,8 @@
 {
   "dependencies": {
+    "chalk": "^4.1.1",
     "discord.js": "^12.5.1",
-    "enmap": "^5.8.6",
     "express": "^4.17.1",
-    "ffmpeg-static": "^4.4.0",
     "systeminformation": "^5.6.7",
     "ytdl": "^1.4.1",
     "ytpl": "^2.2.1",

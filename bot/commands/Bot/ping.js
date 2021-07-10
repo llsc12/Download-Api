@@ -2,6 +2,7 @@ const Discord = require('discord.js')
 module.exports = {
 	name: 'ping',
   description: 'Ping!',
+  cooldown:5,
 	async execute(client, message, args) {
     message.delete()
     const pingmsg = await message.channel.send("Pinging...");

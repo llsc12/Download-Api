@@ -1,10 +1,9 @@
-const discord = require('discord.js'), fs = require('fs'), enmap = require('enmap')
+const discord = require('discord.js'), fs = require('fs')
 module.exports = {
 	name: 'help',
 	description: 'Advanced Dynamic Help Command (ADHC)',
   usage:'help [command]',
 	async execute(client, message, args) {
-    const data = new enmap({name:'botdata', dataDir:'./bot/data'})
     var prefix = 'dl!'
     message.delete()
     if (!args[0]) {
@@ -29,9 +28,10 @@ module.exports = {
       let categoryDirectories = new Array()
       fs.readdirSync('./bot/commands').forEach(c => categoryDirectories[categoryDirectories.length] = c)
       categoryDirectories.forEach(categoryName => {
-        cmdFileNames = fs.readdirSync(`./commands/${categoryName}`)
+        cmdFileNames = fs.readdirSync(`./bot/commands/${categoryName}`)
         cmdFileNames.forEach(cmdName => {
           let cmd = require(`./../${categoryName}/${cmdName}`)
+          if (!cmd.name) return
           if (cmd.hidden && !cmd.searchable) return
           if (cmd.name.includes(searchTerms)) return searchResults[searchResults.length] = cmd
           if (cmd.aliases) if (cmd.aliases.includes(searchTerms)) return searchResults[searchResults.length] = cmd
