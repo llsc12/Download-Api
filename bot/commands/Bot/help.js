@@ -12,7 +12,7 @@ module.exports = {
       .setDescription(`Showing directory *\`./bot/commands/\`*\n\n***${fs.readdirSync('./bot/commands/').join('\n')}***`)
       .setThumbnail(`https://llsc12.ml/assets/favicon.png`)
       .setColor('BLUE')
-      .setFooter('Aquacious',`https://llsc12.ml/assets/favicon.png`)
+      .setFooter('Download API',`https://llsc12.ml/assets/favicon.png`)
 
       message.channel.send(helpEmbed).then(async x => {
         client.msgOwners.set(x.id ,'Help Menu '+message.author.id+` Home`)
@@ -77,7 +77,7 @@ module.exports = {
       .addField("Aliases", aliases)
       .setColor("BLUE")
       .addField('Usage', usage)
-      .setFooter('Aquacious',`https://llsc12.ml/assets/favicon.png`)
+      .setFooter('Download API',`https://llsc12.ml/assets/favicon.png`)
 
       message.channel.send(embed)
     }

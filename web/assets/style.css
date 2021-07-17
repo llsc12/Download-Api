@@ -9,14 +9,14 @@ body {
   margin-top:10vh;
   color: white;
 }
-.URL-input, .convert-button {
+
+.URL-input {
   font-size:1.3em;
   padding:5px 10px;
-}
-.URL-input {
   border-radius:4px 4px 4px 4px;
   width:31em;
   text-align: left;
+  align-self: center;
   border:1px solid #3c4244;
   background: #222527;
   outline:none;
@@ -24,6 +24,7 @@ body {
 .URL-input:focus {
   border:2px solid #0485ff;
 }
+
 .btn {
   border-radius:4px 4px 4px 4px;
   border:9px solid #0485ff;
@@ -38,4 +39,20 @@ body {
   font-family: Arial;
   margin-top:3vh;
   color: white;
+}
+
+div.aligned {
+  display: flex;
+  align-items: center;
+  margin-bottom:10px;
+  padding:0.01em 16px;
+  color:#000!important;
+  background-color:#ffdddd71!important;
+  border-left:6px solid #ccc!important;
+  border-color:#f32121!important;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+p.sidetext {
+  padding: 10px;
 }

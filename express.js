@@ -3,8 +3,9 @@ module.exports = {
     const express = require('express'), fs = require('fs'), path = require('path'), config = require('./configuration.json')
 
     for (const versionFolder of fs.readdirSync('./versions')) {
+      // iterate through all api versions and add to srv for each endpoint of each version
       if (versionFolder.match(/[0-9]+/)) {
-        let endpoints = new Array()
+        let endpoints = new Array() // to generate the endpoints list for all version pages
         for (const file of fs.readdirSync(`./versions/${versionFolder}/`)) {
           const loaded = require(`./versions/${versionFolder}/${file}`)
           if (!loaded.endpoint || !loaded.execute) return
@@ -70,7 +71,7 @@ module.exports = {
     }
 
 
-    let portnumber = 3000
+    let portnumber = 4000
     if (config.port) portnumber = config.port
     console.log('Running on local port '+portnumber)
     srv.listen(portnumber)
