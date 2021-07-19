@@ -8,20 +8,37 @@
     <meta content="https://llsc12.ml/assets/favicon.png" property="og:image">
     <meta content="#00FFF4" data-react-helmet="true" name="theme-color">
   </head>
+  <style id="bg-image-styling">
+    .bg-thumbnail {background-image: url(""); filter: blur(8px); -webkit-filter: blur(8px); height: 100%; background-position: top; background-repeat: no-repeat; background-size: contain;} .main{position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2;}
+  </style>
+  <script>
+    let currentURL = '';
+    setInterval(async () => {
+      let inputbox = document.getElementById('txt').value
+      if (inputbox == currentURL) return
+      currentURL = inputbox
+      let vidData = await fetch(`/api/v1/getInfo?url=${currentURL}`)
+      vidData = await vidData.json()
+      let imgurl = 'api/v1/thumbnails?path='+vidData.videoDetails.thumbnails[4].url.split('https://i.ytimg.com/')[1]
+      document.getElementById("bg-image-styling").innerHTML = '.bg-thumbnail {background-image: url("'+imgurl+'"); filter: blur(8px); -webkit-filter: blur(8px); height: 100%; background-position: top; background-repeat: no-repeat; background-size: cover;} .main{position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2;}'
+    }, 1000)
+  </script>
   <body>
-    <h1 class="heading">Download API Viewer</h1>
-    <input id="txt" class="URL-input" placeholder="Video URL">
-    <div>
-      <video class="video" width="640" height="360" id="video" controls autoplay="false">
-        <source id="source" src="" type="video/mp4">
-      </video>
+    <div class="bg-thumbnail"></div>
+    <div class="main">
+      <h1 class="heading">Download API Viewer</h1>
+      <input id="txt" class="URL-input" placeholder="Video URL">
+      <div>
+        <video class="video" width="640" height="360" id="video" controls autoplay="false">
+          <source id="source" src="" type="video/mp4">
+        </video>
+      </div>
     </div>
-
-    <h1 class="search">Search</h1>
-    <h3 id="gm" style="color: white;"></h3>
-    <input class="URL-input" id="search-bar" style="margin-bottom: 15px;" placeholder="Search">
-    <div id="search-container">
-    </div>
+      <h1 class="search">Search</h1>
+      <h3 id="gm" style="color: white;"></h3>
+      <input class="URL-input" id="search-bar" style="margin-bottom: 15px;" placeholder="Search">
+      <div id="search-container">
+      </div>
   </body>
 
   <script>
@@ -86,7 +103,6 @@
             data.items.push(item)
           }
 
-          console.log(data.items)
           document.getElementById('gm').innerHTML = 'Loaded '+data.items.length+' results for '+searchterms
 
           for (video of data.items) {

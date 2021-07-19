@@ -1,0 +1,20 @@
+a {
+  background-color: rgb(0, 153, 255);
+  padding: 8px;
+  margin-top: 10px;
+  border-radius: 10px;
+  color:rgba(255, 255, 255, 0.856);
+  text-decoration: none;
+}
+
+.notice {
+  display: inline-flex;
+  border-radius: 10px;
+  width: 500px;
+  background-color: rgba(0, 153, 255, 0.754);
+  margin-top: 40px;
+  margin-bottom: 15px;
+  justify-content: center;
+  color:rgba(255, 255, 255, 0.856);
+
+}

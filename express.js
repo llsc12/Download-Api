@@ -26,19 +26,8 @@ module.exports = {
       let verFolders = new Array()
       for (folder of fs.readdirSync('./versions')) verFolders.push(folder)
       let latestVer = Math.max(...verFolders)
-
-      res.send(`
-      <p><a href="/api/v${latestVer}">Click to see latest endpoints</a></p>
-      <p><a href="/watch">Click to use the GUI</a></p>
-      <p><a href="https://github.com/llsc12/download-api">Click to check out the GitHub Repo</a></p>
-
-      <title>Download API</title>
-      <meta content="Download API" property="og:title">
-      <meta content="YouTube API written in NodeJS" property="og:description">
-      <meta content="https://avatars.githubusercontent.com/u/42747613" property="og:image">
-      <meta content="#00FFF4" data-react-helmet="true" name="theme-color">
-
-      `)
+      
+      res.sendFile(path.join(__dirname, `/root.html`))
     })
 
     srv.all('/api', (req, res) => {
