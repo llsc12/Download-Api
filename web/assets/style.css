@@ -1,5 +1,6 @@
 * {
   text-align: center;
+  font-family: Arial
 }
 body {
   background: #141718;
@@ -17,12 +18,14 @@ body {
   width:31em;
   text-align: left;
   align-self: center;
-  border:1px solid #3c4244;
+  border:2px solid #3c4244;
   background: #222527;
+  color: rgb(155, 155, 155);
   outline:none;
 }
 .URL-input:focus {
   border:2px solid #0485ff;
+  color: white;
 }
 
 .btn {
@@ -34,6 +37,9 @@ body {
 .video {
   padding:20px 10px;
   align-self: center;
+}
+.video:fullscreen {
+  padding: 0px 0px;
 }
 .search {
   font-family: Arial;
@@ -47,7 +53,7 @@ div.aligned {
   margin-bottom:10px;
   padding:0.01em 16px;
   color:#000!important;
-  background-color:#ffdddd71!important;
+  background-color: rgb(38, 13, 13)!important;
   border-left:6px solid #ccc!important;
   border-color:#f32121!important;
   padding-top: 1px;
@@ -55,4 +61,24 @@ div.aligned {
 }
 p.sidetext {
   padding: 10px;
+  text-align: left;
+  font-family: Arial;
+
+}
+p, h3 {
+  font-family: Arial;
+  color: #ffffff;
+}
+.alignedclear {
+  display: flex;
+  align-items: center;
+  margin-bottom:10px;
+  padding:0.01em 16px;
+  color:#000!important;
+  border-left:6px solid #ccc!important;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  border-color: azure!important;
+  background-color: rgba(179, 179, 179, 0.295)!important;
+  border-radius: 0px 5px 5px 0px;
 }

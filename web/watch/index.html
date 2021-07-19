@@ -1,21 +1,27 @@
 <html>
   <link rel="stylesheet" href="assets/style.css">
   <head>
-    <link rel="icon" href="watch/favicon.png">
+    <link rel="icon" href="assets/favicon.png">
     <title>Download API</title>
     <meta id="title" content="Download API Viewer" property="og:title">
     <meta id="description" content="View YouTube videos without the YouTube" property="og:description">
-    <meta content="https://llsc12.ml/watch/favicon.png" property="og:image">
+    <meta content="https://llsc12.ml/assets/favicon.png" property="og:image">
     <meta content="#00FFF4" data-react-helmet="true" name="theme-color">
   </head>
   <body>
     <h1 class="heading">Download API Viewer</h1>
     <input id="txt" class="URL-input" placeholder="Video URL">
-    <video class="video" width="640" height="360" id="video" controls autoplay="false">
-      <source id="source" src="" type="video/mp4">
-    </video>
+    <div>
+      <video class="video" width="640" height="360" id="video" controls autoplay="false">
+        <source id="source" src="" type="video/mp4">
+      </video>
+    </div>
 
     <h1 class="search">Search</h1>
+    <h3 id="gm" style="color: white;"></h3>
+    <input class="URL-input" id="search-bar" style="margin-bottom: 15px;" placeholder="Search">
+    <div id="search-container">
+    </div>
   </body>
 
   <script>
@@ -60,5 +66,56 @@
         video.play();
       }
     }, 1000)
+  </script>
+  <script>
+    var input = document.getElementById("search-bar");
+    input.addEventListener("keyup", function(event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+
+        async function resultsDisplay(searchterms) {
+          document.getElementById('gm').innerHTML = 'Loading results for '+searchterms
+          document.getElementById('search-container').innerHTML = null
+          const response = await fetch(`/api/v1/search?search_query=${searchterms}&limit=40`);
+          const data = await response.json();
+          const items = data.items
+          data.items = new Array()
+          for (item of items) {
+            if (item.type !== 'video') continue;
+            if (data.items.length >= 30) break;
+            data.items.push(item)
+          }
+
+          console.log(data.items)
+          document.getElementById('gm').innerHTML = 'Loaded '+data.items.length+' results for '+searchterms
+
+          for (video of data.items) {
+            let imgurl = video.bestThumbnail.url.split('https://i.ytimg.com/')[1]
+            document.getElementById('search-container').innerHTML = 
+            `
+            ${document.getElementById('search-container').innerHTML}
+            <div class='aligned'>
+              <a id='url' href='watch?v=${video.id}'>
+                <img id='img' src='api/v1/thumbnails?path=${imgurl}' width="180" height="101" alt="">
+              </a>
+              <p id='title' class='sidetext'><a href=watch?v=${video.id}>${video.title}</a></p>
+              <p id='auth' class='sidetext'>${video.author.name}</p>
+            </div>
+            `
+          }
+          document.getElementById('search-container').innerHTML = 
+            `
+            ${document.getElementById('search-container').innerHTML}
+            <div class="alignedclear">
+              <button style="margin-top: 5px; margin-bottom: 5px;" class="btn" onclick="document.getElementById('search-container').innerHTML = ''; document.getElementById('search-bar').value = ''; document.getElementById('gm').innerHTML = '';">Clear</button>
+            </div>
+            `
+        }
+        
+        let query = document.getElementById('search-bar').value
+        if (!query) document.getElementById('gm').innerHTML = `Enter a search query first`
+        else resultsDisplay(query.split('+').join(' ').split('%20').join(' '))
+      }
+    });
   </script>
 </html>

@@ -8,7 +8,7 @@ module.exports = {
     if (!details.page) {return res.send({error:'API Error: Page not available'})}
     let vid = ytdl(vidURL, {filter: 'audioonly', quality: 'highestaudio'})
     .on('error', (e) => {return res.send({error:'API Error: '+e})})
-    res.set('Content-Type', 'application/octet-stream')
+    res.set('Content-Type', 'audio/mp3')
     res.set('Content-Disposition', 'attachment; filename="audio.webm"')
     vid.pipe(res)
   }
