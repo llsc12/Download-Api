@@ -2,9 +2,20 @@
   text-align: center;
   font-family: Arial
 }
+
+a.dl {
+  background-color: rgb(0, 153, 255);
+  padding: 8px;
+  margin-top: 10px;
+  border-radius: 10px;
+  color:rgba(255, 255, 255, 0.856);
+  text-decoration: none;
+}
+
 body {
   background: #141718;
 }
+
 .heading {
   font-family: Arial;
   margin-top:10vh;
@@ -23,6 +34,7 @@ body {
   color: rgb(155, 155, 155);
   outline:none;
 }
+
 .URL-input:focus {
   border:2px solid #0485ff;
   color: white;
@@ -34,13 +46,16 @@ body {
   background: #0485ff;
   color:white;
 }
+
 .video {
   padding:20px 10px;
   align-self: center;
 }
+
 .video:fullscreen {
   padding: 0px 0px;
 }
+
 .search {
   font-family: Arial;
   margin-top:3vh;
@@ -59,16 +74,18 @@ div.aligned {
   padding-top: 1px;
   padding-bottom: 1px;
 }
+
 p.sidetext {
   padding: 10px;
   text-align: left;
   font-family: Arial;
-
 }
+
 p, h3 {
   font-family: Arial;
   color: #ffffff;
 }
+
 .alignedclear {
   display: flex;
   align-items: center;
