@@ -23,18 +23,25 @@
   </style>
   <script>
     let currentURL = '';
+    let imgurl = '';
+    let vidData = '';
     setInterval(async () => {
       let regexCode = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*?[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/gi
       let inputbox = document.getElementById('txt').value
-      if (inputbox == currentURL) return
-      if (inputbox == '') return document.getElementById("bg-image-styling").innerHTML = '.bg-thumbnail {background-image: url(""); filter: blur(8px); -webkit-filter: blur(8px); height: 100%; background-position: top; background-repeat: no-repeat; background-size: cover;} .main{position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2;}'
-      if (!inputbox.match(regexCode)) return
+      if (inputbox == currentURL) {
+        if (imgurl) document.getElementById("bg-image-styling").innerHTML = '.bg-thumbnail {background-image: url("'+imgurl+'"); filter: blur(8px); -webkit-filter: blur(8px); height: 100%; background-position: top; background-repeat: no-repeat; background-size: cover;} .main{position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2;}'
+        return
+      }
+      if (inputbox == '') {
+        document.getElementById("bg-image-styling").innerHTML = '.bg-thumbnail {background-image: url(""); filter: blur(8px); -webkit-filter: blur(8px); height: 100%; background-position: top; background-repeat: no-repeat; background-size: cover;} .main{position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2;}'
+      }
+        if (!inputbox.match(regexCode)) return
       if (!(inputbox.match(regexCode).length == 1)) return
       if (!inputbox.match(regexCode)[0]) return
       currentURL = inputbox
-      let vidData = await fetch(`/api/v1/getInfo?url=${currentURL}`)
+      vidData = await fetch(`/api/v1/getInfo?url=${currentURL}`)
       vidData = await vidData.json()
-      let imgurl = 'api/v1/thumbnails?path='+vidData.videoDetails.thumbnails[vidData.videoDetails.thumbnails.length-1].url.split('https://i.ytimg.com/')[1]
+      imgurl = 'api/v1/thumbnails?path='+vidData.videoDetails.thumbnails[vidData.videoDetails.thumbnails.length-1].url.split('https://i.ytimg.com/')[1]
       
       document.getElementById('maindl').setAttribute('onclick', `window.location.href='/api/v1/download?url=${document.getElementById('txt').value}'`)
       document.getElementById('videodl').setAttribute('onclick', `window.location.href='/api/v1/video?url=${document.getElementById('txt').value}'`)
@@ -42,6 +49,32 @@
       
       document.getElementById("bg-image-styling").innerHTML = '.bg-thumbnail {background-image: url("'+imgurl+'"); filter: blur(8px); -webkit-filter: blur(8px); height: 100%; background-position: top; background-repeat: no-repeat; background-size: cover;} .main{position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2;}'
       document.getElementById("videotitle").innerHTML = vidData.videoDetails.title
+
+      document.getElementById('search-subtext').innerHTML = '';
+      document.getElementById('searchtext').innerHTML = 'Related Videos'
+
+      for (video of vidData.related_videos) {
+        let imgurl = video.thumbnails[video.thumbnails.length-1].url.split('https://i.ytimg.com/')[1]
+        document.getElementById('search-container').innerHTML = 
+        `
+        ${document.getElementById('search-container').innerHTML}
+        <div class='aligned'>
+          <a id='url' href='watch?v=${video.id}'>
+            <img id='img' src='api/v1/thumbnails?path=${imgurl}' width="180" height="101" alt="">
+          </a>
+          <p id='title' class='sidetext'><a href=watch?v=${video.id}>${video.title}</a></p>
+          <p id='auth' class='sidetext'>${video.author.name}</p>
+        </div>
+        `
+      }
+      document.getElementById('search-container').innerHTML = 
+        `
+        ${document.getElementById('search-container').innerHTML}
+        <div class="alignedclear">
+          <button style="margin-top: 5px; margin-bottom: 5px;" class="btn" onclick="document.getElementById('search-container').innerHTML = ''; document.getElementById('search-bar').value = ''; document.getElementById('search-subtext').innerHTML = '';">Clear</button>
+        </div>
+        `
+
     }, 1000)
   </script>
   <body>
@@ -50,14 +83,16 @@
       <h2 class="heading" id="videotitle">Download API Viewer</h2>
       <input id="txt" class="URL-input" placeholder="Video URL">
       <div>
-        <video class="video" width="640" height="360" id="video" controls="true" autoplay="true">
+        <video class="video" width="640" height="360" id="video" controls autoplay>
           <source id="source" src="" type="video/mp4">
         </video>
       </div>
     </div>
-    <h1 class="search">Search</h1>
-    <h3 id="gm" style="color: white;"></h3>
-    <input class="URL-input" id="search-bar" style="margin-bottom: 15px;" placeholder="Search">
+    <h1 class="search" id='searchtext'>Search</h1>
+    <div id="related-videos"></div>
+    <h3 id="search-subtext" style="color: white;"></h3>
+    <input class="URL-input" id="search-bar" onfocusout="if (document.getElementById('search-subtext').innerHTML.includes('Loaded')) return; else document.getElementById('searchtext').innerHTML = 'Related Videos'" style="margin-bottom: 15px;" placeholder="Search" onclick="document.getElementById('searchtext').innerHTML = 'Search'">
+    
     <div id="search-container"></div>
     <div class="buttons-row">
       <h3>Downloads</h3>
@@ -96,21 +131,23 @@
       document.getElementById('txt').value = 'https://youtu.be/'+query["v"]
       video.load();
     }
+
     setInterval(() => {
       let txtbox = document.getElementById('txt').value
       if (vidurl !== txtbox) {
         let regexCode = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*?[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/gi
+        let idcode = /(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/
         if (!txtbox.match(regexCode)) return
         if (!(txtbox.match(regexCode).length == 1)) return
         if (!txtbox.match(regexCode)[0]) return
-        document.getElementById('txt').value = "https://"+(txtbox.match(regexCode)[0])
+        document.getElementById('txt').value = "https://youtu.be/"+(txtbox.match(idcode)[1])
         txtbox = document.getElementById('txt').value
         vidurl = txtbox
-        source.setAttribute('src', urlStart+document.getElementById('txt').value);
-        video.load();
-        video.play();
+        console.log(urlStart+document.getElementById('txt').value)
+        document.getElementById('source').setAttribute('src', urlStart+document.getElementById('txt').value);
+        window.location.href=`/watch?v=${txtbox.match(idcode)[1]}`
       }
-    }, 1000)
+    }, 1500)
   </script>
   <script>
     var input = document.getElementById("search-bar");
@@ -119,7 +156,7 @@
         event.preventDefault();
 
         async function resultsDisplay(searchterms) {
-          document.getElementById('gm').innerHTML = 'Loading results for '+searchterms
+          document.getElementById('search-subtext').innerHTML = 'Loading results for '+searchterms
           document.getElementById('search-container').innerHTML = null
           const response = await fetch(`/api/v1/search?search_query=${searchterms}&limit=40`);
           const data = await response.json();
@@ -131,7 +168,7 @@
             data.items.push(item)
           }
 
-          document.getElementById('gm').innerHTML = 'Loaded '+data.items.length+' results for '+searchterms
+          document.getElementById('search-subtext').innerHTML = 'Loaded '+data.items.length+' results for '+searchterms
 
           for (video of data.items) {
             let imgurl = video.bestThumbnail.url.split('https://i.ytimg.com/')[1]
@@ -151,13 +188,13 @@
             `
             ${document.getElementById('search-container').innerHTML}
             <div class="alignedclear">
-              <button style="margin-top: 5px; margin-bottom: 5px;" class="btn" onclick="document.getElementById('search-container').innerHTML = ''; document.getElementById('search-bar').value = ''; document.getElementById('gm').innerHTML = '';">Clear</button>
+              <button style="margin-top: 5px; margin-bottom: 5px;" class="btn" onclick="document.getElementById('search-container').innerHTML = ''; document.getElementById('search-bar').value = ''; document.getElementById('search-subtext').innerHTML = '';">Clear</button>
             </div>
             `
         }
         
         let query = document.getElementById('search-bar').value
-        if (!query) document.getElementById('gm').innerHTML = `Enter a search query first`
+        if (!query) document.getElementById('search-subtext').innerHTML = `Enter a search query first`
         else resultsDisplay(query.split('+').join(' ').split('%20').join(' '))
       }
     });
