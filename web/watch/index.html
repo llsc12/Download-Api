@@ -34,18 +34,23 @@
       currentURL = inputbox
       let vidData = await fetch(`/api/v1/getInfo?url=${currentURL}`)
       vidData = await vidData.json()
-      console.log(vidData)
       let imgurl = 'api/v1/thumbnails?path='+vidData.videoDetails.thumbnails[vidData.videoDetails.thumbnails.length-1].url.split('https://i.ytimg.com/')[1]
+      
+      document.getElementById('maindl').setAttribute('onclick', `window.location.href='/api/v1/download?url=${document.getElementById('txt').value}'`)
+      document.getElementById('videodl').setAttribute('onclick', `window.location.href='/api/v1/video?url=${document.getElementById('txt').value}'`)
+      document.getElementById('audiodl').setAttribute('onclick', `window.location.href='/api/v1/audio?url=${document.getElementById('txt').value}'`)
+      
       document.getElementById("bg-image-styling").innerHTML = '.bg-thumbnail {background-image: url("'+imgurl+'"); filter: blur(8px); -webkit-filter: blur(8px); height: 100%; background-position: top; background-repeat: no-repeat; background-size: cover;} .main{position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2;}'
+      document.getElementById("videotitle").innerHTML = vidData.videoDetails.title
     }, 1000)
   </script>
   <body>
     <div class="bg-thumbnail"></div>
     <div class="main">
-      <h1 class="heading">Download API Viewer</h1>
+      <h2 class="heading" id="videotitle">Download API Viewer</h2>
       <input id="txt" class="URL-input" placeholder="Video URL">
       <div>
-        <video class="video" width="640" height="360" id="video" controls autoplay="false">
+        <video class="video" width="640" height="360" id="video" controls="true" autoplay="true">
           <source id="source" src="" type="video/mp4">
         </video>
       </div>
@@ -102,9 +107,6 @@
         txtbox = document.getElementById('txt').value
         vidurl = txtbox
         source.setAttribute('src', urlStart+document.getElementById('txt').value);
-        document.getElementById('maindl').setAttribute('href', `api/v1/download?url=${document.getElementById('txt').value}`)
-        document.getElementById('videodl').setAttribute('href', `api/v1/video?url=${document.getElementById('txt').value}`)
-        document.getElementById('audiodl').setAttribute('href', `api/v1/audio?url=${document.getElementById('txt').value}`)
         video.load();
         video.play();
       }

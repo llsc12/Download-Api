@@ -20,6 +20,10 @@ body {
   font-family: Arial;
   margin-top:10vh;
   color: white;
+  background: #2225278e;
+  border:2px solid #3c424483;
+  border-radius:4px 4px 4px 4px;
+  padding: 5px;
 }
 
 .URL-input {
@@ -29,9 +33,9 @@ body {
   width:31em;
   text-align: left;
   align-self: center;
-  border:2px solid #3c4244;
-  background: #222527;
-  color: rgb(155, 155, 155);
+  border:2px solid #3c424483;
+  background: #2225278e;
+  color: rgba(255, 255, 255, 0.842);
   outline:none;
 }
 
@@ -48,12 +52,16 @@ body {
 }
 
 .video {
-  padding:20px 10px;
+  margin:20px 10px;
+  border:2px solid #3c424483;
+  border-radius: 15px;
+  background: #000;
   align-self: center;
 }
 
 .video:fullscreen {
-  padding: 0px 0px;
+  border:0px solid #3c424483;
+  border-radius: 0px;
 }
 
 .search {
@@ -100,3 +108,6 @@ p, h3 {
   border-radius: 0px 5px 5px 0px;
 }
 
+.btn:hover, .btn:focus {
+  opacity:0.8;
+}
