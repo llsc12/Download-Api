@@ -20,6 +20,10 @@
     .dl {
       display: inline-block;
     }
+    a {
+      color:rgba(255, 255, 255, 0.856);
+      text-decoration: none;
+    }
   </style>
   <script>
     let currentURL = '';
@@ -60,7 +64,7 @@
         ${document.getElementById('search-container').innerHTML}
         <div class='aligned'>
           <a id='url' href='watch?v=${video.id}'>
-            <img id='img' src='api/v1/thumbnails?path=${imgurl}' width="180" height="101" alt="">
+            <img id='img' src='api/v1/thumbnails?path=${imgurl}' width="160" height="120" alt="">
           </a>
           <p id='title' class='sidetext'><a href=watch?v=${video.id}>${video.title}</a></p>
           <p id='auth' class='sidetext'>${video.author.name}</p>

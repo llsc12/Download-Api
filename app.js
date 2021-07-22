@@ -52,5 +52,4 @@ if (config.bot_token) {
       console.log(chalk.hex('#808080')(`Loaded command `)+chalk.hex('#3c850c')(`${file} - ${require(`./bot/commands/${folder}/${file}`).name}`))
     }
   }
-  
 }
