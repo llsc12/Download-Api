@@ -52,6 +52,7 @@
       document.getElementById('audiodl').setAttribute('onclick', `window.location.href='/api/v1/audio?url=${document.getElementById('txt').value}'`)
       
       document.getElementById("bg-image-styling").innerHTML = '.bg-thumbnail {background-image: url("'+imgurl+'"); filter: blur(8px); -webkit-filter: blur(8px); height: 100%; background-position: top; background-repeat: no-repeat; background-size: cover;} .main{position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2;}'
+      document.getElementById('video').setAttribute('poster', imgurl)
       document.getElementById("videotitle").innerHTML = vidData.videoDetails.title
 
       document.getElementById('search-subtext').innerHTML = '';
