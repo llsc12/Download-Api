@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <title>Hello lol</title>
+    <style>
+      * {
+  text-align: center;
+  font-family: Arial;
+  color: white;
+}
+
+body {
+  background: #141718;
+}
+
+.heading {
+  font-family: Arial;
+  margin-top:10vh;
+  color: white;
+  background: #2225278e;
+  border:2px solid #3c424483;
+  border-radius:4px 4px 4px 4px;
+  padding: 5px;
+}
+
+.text-input, .selected {
+  font-size:1.3em;
+  padding:5px 10px;
+  border-radius:4px 4px 4px 4px;
+  width:31em;
+  text-align: left;
+  align-self: center;
+  border:2px solid #3c424483;
+  background: #2225278e;
+  color: rgba(255, 255, 255, 0.842);
+  outline:none;
+}
+
+.text-input:focus {
+  border:2px solid #0485ff;
+  color: white;
+}
+
+.btn {
+  border-radius:4px 4px 4px 4px;
+  border:9px solid #0485ff;
+  background: #0485ff;
+  color:white;
+}
+
+.search {
+  font-family: Arial;
+  margin-top:3vh;
+  color: white;
+}
+
+div.aligned {
+  display: flex;
+  align-items: center;
+  margin-bottom:10px;
+  padding:0.01em 16px;
+  color:#000!important;
+  background-color: rgb(38, 13, 13)!important;
+  border-left:6px solid #ccc!important;
+  border-color:#f32121!important;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+p.sidetext {
+  padding: 10px;
+  text-align: left;
+  font-family: Arial;
+}
+
+p, h3 {
+  font-family: Arial;
+  color: #ffffff;
+}
+
+.alignedclear {
+  display: flex;
+  align-items: center;
+  margin-bottom:10px;
+  padding:0.01em 16px;
+  color:#000!important;
+  border-left:6px solid #ccc!important;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  border-color: azure!important;
+  background-color: rgba(179, 179, 179, 0.295)!important;
+  border-radius: 0px 5px 5px 0px;
+}
+
+.btn:hover {
+  opacity:0.8;
+}
+    </style>
+  </head>
+  <body>
+    <input class="text-input" id="quantity" type="number" min="1" max="300" style="width: 60px;" value="10" onkeyup="if (document.getElementById('quantity').value >= parseInt(document.getElementById('quantity').getAttribute('max'))) {document.getElementById('quantity').value = parseInt(document.getElementById('quantity').getAttribute('max'))}">
+    <br><br>
+    <label for="select">https://nekos.life/api/v2/img/</label>
+    <select name="select" id="selected" class="selected" style="width: 150px; font-size: 10px;"></select>
+    <br><br>
+    <input type="submit" value="Download" class="btn" id="submit">
+    <br><br>
+    <h1 id="txt"></h1>
+    <div id="display"></div>
+  </body>
+  <script>
+// Add options to dropdown
+const imgsrc = ["neko", "fox_girl", "gecg", "cuddle", "les", "futanari", "boobs", "Random_hentai_gif", "erok", "feetg", "bj", "erokemo", "nsfw_neko_gif", "kuni", "femdom", "lewdk", "trap", "blowjob", "hentai", "hololewd", "ngif", "solog", "pussy", "yuri", "lewdkemo", "lewd", "anal", "pwankg", "nsfw_avatar", "eron", "pussy_jpg", "keta", "eroyuri", "cum_jpg", "tits", "holoero", "classic", "kemonomimi", "feet", "erofeet", "ero", "solo", "cum", "holo"]
+imgsrc.forEach(item => {
+  document.getElementById('selected').innerHTML = `
+  ${document.getElementById('selected').innerHTML}
+  <option value="${item}">${item}</option>`
+})
+
+// Assign function to button
+async function display() {
+  document.getElementById('display').innerHTML = '<h1>Loading</h1>'
+  let total = parseInt(`${document.getElementById('quantity').value}`)
+  let counter = 0
+  let links = new Array()
+  while (counter !== total) {
+    let api = await fetch(`https://nekos.life/api/v2/img/${document.getElementById('selected').value}`)
+    api = await api.json()
+    if (links.includes(api.url)) {
+      document.getElementById('display').innerHTML = `<label for="load">Retrying ${counter}/${total}  </label><progress name="load" value="${counter}" max="${total}"></progress>`
+      while (links.includes(api.url)) {
+        api = await fetch(`https://nekos.life/api/v2/img/${document.getElementById('selected').value}`)
+        api = await api.json()
+      }
+    }
+    else links.push(api.url)
+    document.getElementById('display').innerHTML = `<label for="load">Loading ${counter}/${total}  </label><progress name="load" value="${counter}" max="${total}"></progress>`
+    counter = counter+1
+  }
+  document.getElementById('display').innerHTML = '<h1 id="complete">Linking to display</h1>'
+  links.forEach(link => {
+    document.getElementById('display').innerHTML = `
+    ${document.getElementById('display').innerHTML}
+    <img src="${link}">`
+  })
+  document.getElementById('complete').innerHTML = '<h1 id="complete">Done!</h1>'
+}
+document.getElementById('submit').setAttribute('onclick', 'display()')
+  </script>
+</html>

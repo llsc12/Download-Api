@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title id="site-title">Loading...</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+
+  <style>
+    * {
+      text-align: center;
+      font-family: Arial;
+      color:rgba(255, 255, 255, 0.856);
+      z-index: 1;
+    }
+
+    .sc-img {
+      display: flex;
+    }
+
+    body {
+      background: #141718;
+    }
+
+    .heading {
+      font-family: Arial;
+      margin-top:10vh;
+      color: white;
+      background: #2225278e;
+      border:2px solid #3c424483;
+      border-radius:4px 4px 4px 4px;
+      padding: 5px;
+    }
+
+    .URL-input {
+      font-size:1.3em;
+      padding:5px 10px;
+      border-radius:4px 4px 4px 4px;
+      width:31em;
+      text-align: left;
+      align-self: center;
+      border:2px solid #3c424483;
+      background: #2225278e;
+      color: rgba(255, 255, 255, 0.842);
+      outline:none;
+    }
+
+    .URL-input:focus {
+      border:2px solid #0485ff;
+      color: white;
+    }
+
+    .btn {
+      border-radius:4px 4px 4px 4px;
+      border:9px solid #0485ff;
+      background: #0485ff;
+      color:white;
+      margin: 10px;
+    }
+
+    .btn:hover, .btn:focus {
+      opacity:0.8;
+    }
+  </style>
+
+  <body>
+
+    <h1 id="sc-title" class="heading"></h1>
+    <div>
+      <img id="sc-img" height="100px" width="100px">
+      <br>
+      <button id="sc-addbtn" class="btn" >Add to Shortcuts</button>  
+    </div>
+
+  </body>
+
+  <script>
+    function urlParse (url) {
+      // thanks to Intelli :)
+      let urlquery = url.split('?')[1]
+      if (!urlquery) return []
+      let params = urlquery.split('&')
+      let array = new Array()
+      for (each of params) {
+        let split = each.split('=')
+        array[split[0]]=split[1]
+      }
+      return array
+    }
+    (async () => {
+      //Load iCloud API stuff
+      let query = urlParse(document.URL)
+      let api = await fetch(`/api/v1/shortcuts?id=${query["id"]}`)
+      api = await api.json()
+      document.getElementById('sc-title').innerHTML = api.fields.name.value
+      document.getElementById('sc-addbtn').setAttribute('onclick', `window.location.href='${'shortcuts://shortcuts/'+query['id']}'`)
+      document.getElementById('sc-img').setAttribute('src', api.fields.icon.value.downloadURL.replace('${f}','img.png'))
+
+    })()
+  </script>
+
+</html>
