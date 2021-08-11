@@ -128,13 +128,17 @@
       }
       if (query["rhid"] && !query["id"]) {
         document.getElementById('sc-title').innerHTML = 'Loading from RoutineHub may take more time...'
-        let rh = await fetch(`https://routinehub.co/api/v1/shortcuts/${query["rhid"]}/versions/latest`)
+        console.log(`Loading RoutineHub data on ${query['rhid']}`)
+        let rh = await fetch(`/api/v1/routinehub?rhid=${query['rhid']}`)
         rh = await rh.json()
+        console.log('Redirecting!')
         query["id"] = rh.URL.slice('https://www.icloud.com/shortcuts/'.length)
         return window.location.href = `/shortcuts?id=${query['id']}`
       }
+      console.log(`Loading Shortcut ${query['id']}`)
       let api = await fetch(`/api/v1/shortcuts?id=${query["id"]}`)
       api = await api.json()
+      console.log('Done!')
       document.getElementById('sc-title').innerHTML = api.fields.name.value
       document.getElementById('site-title').innerHTML = api.fields.name.value
       document.getElementById('sc-addbtn').setAttribute('onclick', `window.location.href='${'shortcuts://shortcuts/'+query['id']}'`)
