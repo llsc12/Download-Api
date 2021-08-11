@@ -36,7 +36,6 @@
       font-size:1.3em;
       padding:5px 10px;
       border-radius:4px 4px 4px 4px;
-      width:31em;
       text-align: left;
       align-self: center;
       border:2px solid #3c424483;
@@ -110,7 +109,7 @@
       //Load iCloud API stuff
       let query = urlParse(document.URL)
       if (!query["id"] && !query["rhid"]) {
-        document.getElementById('display').innerHTML = `<div class="fullscreen"><h1>Hey there!</h1><h3>You need a shortcut ID or RoutineHub ID to continue!</h3><input placeholder="Shortcut ID" class="URL-input" id="scid"><input placeholder="RH ID" class="URL-input" id="rhid" style="margin-top: 10px;"></div>`
+        document.getElementById('display').innerHTML = `<div class="fullscreen"><h1>Hey there!</h1><h3>You need a shortcut ID or RoutineHub ID to continue!</h3><input placeholder="Shortcut ID" class="URL-input" id="scid" style="width: 90%; margin-bottom: 1px;" ><input style="width: 90%;" placeholder="RH ID" class="URL-input" id="rhid" style="margin-top: 10px;"></div>`
         document.getElementById("scid").addEventListener("keyup", (event) => {
           if (event.keyCode === 13) {
             event.preventDefault();
