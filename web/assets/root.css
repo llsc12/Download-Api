@@ -14,7 +14,7 @@ a:hover {
 .notice {
   display: inline-flex;
   border-radius: 10px;
-  width: 500px;
+  width: 80%;
   background-color: rgba(0, 153, 255, 0.754);
   margin-top: 40px;
   margin-bottom: 15px;
