@@ -77,3 +77,4 @@ typings/
 yarn.lock
 configuration.json
 bot/data/
+cache/*
