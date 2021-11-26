@@ -11,7 +11,7 @@ module.exports = {
     //check if file exists
 
     res.set('Content-Type', 'audio/mp3')
-    res.set('Content-Disposition', `attachment; filename="${details.videoDetails.title}.mp3"`)
+    res.set('Content-Disposition', `attachment; filename="${details.videoDetails.videoId}.mp3"`)
     if (fs.existsSync(`./cache/${details.videoDetails.videoId}.mp3`)) {
       res.sendFile(path.join(__dirname, '../../cache/'+details.videoDetails.videoId+'.mp3'))
     } else {

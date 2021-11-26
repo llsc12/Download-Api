@@ -11,7 +11,7 @@ module.exports = {
     //check if file exists
 
     res.set('Content-Type', 'video/mp4')
-    res.set('Content-Disposition', `attachment; filename="${details.videoDetails.title}.mp4"`)
+    res.set('Content-Disposition', `attachment; filename="${details.videoDetails.videoId}.mp4"`)
     if (fs.existsSync(`./cache/${details.videoDetails.videoId}.mp4`)) {
       res.sendFile(path.join(__dirname, '../../cache/'+details.videoDetails.videoId+'.mp4'))
     } else {
