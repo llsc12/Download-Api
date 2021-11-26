@@ -1,6 +1,6 @@
 const ytdl = require('ytdl-core'), fs = require('fs'), path = require('path'), exec = require('child_process').exec;
 module.exports = {
-  endpoint:"download",
+  endpoint:"audio",
   async execute(req, res) {
     const cacheSize = require('./../../configuration.json').cacheSize
     let vidURL = req.query.url
@@ -10,10 +10,10 @@ module.exports = {
     if (err) return res.send({error: `${err}`})
     //check if file exists
 
-    res.set('Content-Type', 'video/mp4')
-    res.set('Content-Disposition', `attachment; filename="${details.videoDetails.title}.mp4"`)
-    if (fs.existsSync(`./cache/${details.videoDetails.videoId}.mp4`)) {
-      res.sendFile(path.join(__dirname, '../../cache/'+details.videoDetails.videoId+'.mp4'))
+    res.set('Content-Type', 'audio/mp3')
+    res.set('Content-Disposition', `attachment; filename="${details.videoDetails.title}.mp3"`)
+    if (fs.existsSync(`./cache/${details.videoDetails.videoId}.mp3`)) {
+      res.sendFile(path.join(__dirname, '../../cache/'+details.videoDetails.videoId+'.mp3'))
     } else {
       // check cache before starting a download 
       exec('du -s -h ./cache', (error, stdout, stderr) => {
@@ -33,13 +33,13 @@ module.exports = {
       })
 
       // run command to download video to cache folder and then sendfile to res
-      let cmd = `cd cache && yt-dlp -f mp4 -o "%(id)s.mp4" "${vidURL}"`
+      let cmd = `cd cache && yt-dlp -f 'ba' -x --audio-format mp3 "${vidURL}" -o '%(id)s.%(ext)s'`
       exec(cmd, (error, stdout, stderr) => {
         if (error) {
           res.send({error: `Unknown error occurred.`})
           return;
         } else {
-          res.sendFile(path.join(__dirname, '../../cache/'+details.videoDetails.videoId+'.mp4'))
+          res.sendFile(path.join(__dirname, '../../cache/'+details.videoDetails.videoId+'.mp3'))
         }
       });
     }

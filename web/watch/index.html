@@ -49,9 +49,9 @@
       vidData = await vidData.json()
       imgurl = 'api/v1/thumbnails?path='+vidData.videoDetails.thumbnails[vidData.videoDetails.thumbnails.length-1].url.split('https://i.ytimg.com/')[1]
       
-      document.getElementById('maindl').setAttribute('onclick', `window.location.href='/api/v1/download?url=${document.getElementById('txt').value}'`)
+      document.getElementById('maindl').setAttribute('onclick', `window.location.href='/api/v2/download?url=${document.getElementById('txt').value}'`)
       document.getElementById('videodl').setAttribute('onclick', `window.location.href='/api/v1/video?url=${document.getElementById('txt').value}'`)
-      document.getElementById('audiodl').setAttribute('onclick', `window.location.href='/api/v1/audio?url=${document.getElementById('txt').value}'`)
+      document.getElementById('audiodl').setAttribute('onclick', `window.location.href='/api/v2/audio?url=${document.getElementById('txt').value}'`)
       
       document.getElementById("bg-image-styling").innerHTML = '.bg-thumbnail {background-image: url("'+imgurl+'"); filter: blur(8px); -webkit-filter: blur(8px); height: 100%; background-position: top; background-repeat: no-repeat; background-size: cover;} .main{position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2;}'
       document.getElementById('video').setAttribute('poster', imgurl)
@@ -125,7 +125,7 @@
       return array
     }
     let query = urlParse(document.URL)
-    let urlStart = `api/v1/download?url=`
+    let urlStart = `api/v2/download?url=`
     var video = document.getElementById('video');
     var source = document.getElementById('source');
     let vidurl = document.getElementById('source').getAttribute('src')

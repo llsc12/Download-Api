@@ -59,10 +59,30 @@ module.exports = {
       console.log(`Loaded Webpage ${page}`)
     }
 
-
     let portnumber = 4000
     if (config.port) portnumber = config.port
     console.log('Running on local port '+portnumber)
     srv.listen(portnumber)
+
+    /*
+    setInterval(async () => {
+      const exec = require('child_process').exec;
+      exec('du -s -h ./cache', (error, stdout, stderr) => {
+        if (error) console.log(`Error: ${error}`);
+        else {
+          let lines = stdout.split('\n')
+          let size = lines[0].split('\t')[0].slice(0, 3)
+          size = parseFloat(size)
+          console.log(size)
+          if (size > 20) {
+            fs.readdirSync('./cache').forEach(file => {
+              fs.unlinkSync(`./cache/${file}`)
+            })
+            console.log('Cache cleared')
+          }
+        }
+      })
+    }, 60000)
+    */
   }
 }
