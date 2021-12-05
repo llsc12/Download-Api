@@ -59,6 +59,9 @@ module.exports = {
       console.log(`Loaded Webpage ${page}`)
     }
 
+    //cache openly available for embeds (coming soon)
+    srv.use('/cache', express.static('cache'))
+
     let portnumber = 4000
     if (config.port) portnumber = config.port
     console.log('Running on local port '+portnumber)
