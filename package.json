@@ -6,6 +6,7 @@
     "express": "^4.17.1",
     "node-fetch": "^2.6.1",
     "systeminformation": "^5.6.7",
+    "yt-trending-scraper": "^2.0.1",
     "ytdl": "^1.4.1",
     "ytpl": "^2.2.1",
     "ytsr": "^3.5.0"
