@@ -78,3 +78,6 @@ yarn.lock
 configuration.json
 bot/data/
 cache/*
+
+# Package-lock.json
+package-lock.json

@@ -95,12 +95,6 @@
         </video>
       </div>
     </div>
-    <h1 class="search" id='searchtext'>Search</h1>
-    <div id="related-videos"></div>
-    <h3 id="search-subtext" style="color: white;"></h3>
-    <input class="URL-input" id="search-bar" onfocusout="if (document.getElementById('search-subtext').innerHTML.includes('Loaded')) return; else document.getElementById('searchtext').innerHTML = 'Related Videos'" style="margin-bottom: 15px;" placeholder="Search" onclick="document.getElementById('searchtext').innerHTML = 'Search'">
-    
-    <div id="search-container"></div>
     <div class="buttons-row">
       <h3>Downloads</h3>
       <button class="btn dl" id="maindl">Download</button>
@@ -109,6 +103,11 @@
       <button class="btn dl" id="videodl">Download HQ Video Only</button>
       <button class="btn dl" id="audiodl">Download HQ Audio Only</button>
     </div>
+    <h1 class="search" id='searchtext'>Search</h1>
+    <div id="related-videos"></div>
+    <h3 id="search-subtext" style="color: white;"></h3>
+    <input class="URL-input" id="search-bar" onfocusout="if (document.getElementById('search-subtext').innerHTML.includes('Loaded')) return; else document.getElementById('searchtext').innerHTML = 'Related Videos'" style="margin-bottom: 15px;" placeholder="Search" onclick="document.getElementById('searchtext').innerHTML = 'Search'">
+    <div id="search-container"></div>
   </body>
 
   <script>
